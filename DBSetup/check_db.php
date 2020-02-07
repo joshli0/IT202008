@@ -1,4 +1,4 @@
-<?php
+\<?php
 ini_set('display_error', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -20,7 +20,30 @@ try{
 			) CHARACTER SET utf8 COLLATE utf8_general_ci"
 		);
 	$stmt->execute();
-	echo var_export($stmt->errorInfo(), true);
+	$stmt = $db->prepare("INSERT INTO `TestUsers`
+		(username, pin) VALUES
+		(:username, :pin)");
+	$stmt->bindValue(":username", 'Josh');
+	$stmt->bindValue(":pin", 1369);
+	//echo var_export($stmt->errorInfo(), true);
+	$stmt = $db->prepare("SELECT id, username
+				FROM `TestUsers`");
+	$r = $stmt->execute(array(":username"=>'Josh',
+				  ":id"=>1369));
+	$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+	echo "<pre>" . var_export($r, true) . "</pre>";
+	echo "<pre>" . var_export($results, true) . 
+	"</pre>";
+	
+	$stmt = $db->prepare("Delete from `TestUsers`
+			    Where id = :id");
+	$r = $stmt->execute(array(":id"=> 1369);
+
+	echo "<pre>" . var_export($r, true) . "</pre>";
+	echo "<pre>" . var_export($stmt->errorInfo(), true)
+	"<pre>";
+
+
 }
 catch(Exception $e){
 	echo $e->getMessage();
