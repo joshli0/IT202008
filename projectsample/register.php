@@ -2,6 +2,25 @@
 	<head>
 		<title>My Project - Register</title>
 		<script>
+			function doValidations(form){
+				let isValid = true;
+				if(!verifyEmail(form) || !verifyPasswords(form)){
+					isValid = false;
+				}
+				return isValid;
+			}
+			function verifyEmail(form){
+				let ee = document.getElementById("email error");
+				if(form.email.value.trim().length == 0){
+					ee.innerText = "Please enter an email address";
+					return false
+				}
+				else{
+					ee.InnerText = "";
+					return true;
+				}
+			}
+			myFunction(1);
 			function findFormsOnLoad(){
 				let myForm = document.forms.regform;
 				let mySameForm = document.getElementById("myForm");
@@ -9,8 +28,8 @@
 				console.log("Form by id", mySameForm);
 			}
 			function verifyPasswords(form){
-				if(form.password.value != form.confirm.value){
-					alert("Uhh you made a typo");
+				if(form.password.value.length == 0 || form.confirm.value.length == 0)){
+					alert("You must enter a password and confirmation password");
 					return false;
 				}
 				return true;
@@ -20,14 +39,24 @@
 	<body onload="findFormsOnLoad();">
 		<!-- This is how you comment -->
 		<form name="regform" id="myForm" method="POST"
-					onsubmit="return verifyPasswords(this)">
+					onsubmit="return verifyPasswords(this) && verifyEmail(this)">
+			<div>
 			<label for="email">Email: </label>
 			<input type="email" id="email" name="email" placeholder="Enter Email"/>
+			<span id = "email_error"></span>
+			</div>
+			<div>
 			<label for="pass">Password: </label>
 			<input type="password" id="pass" name="password" placeholder="Enter password"/>
+			</div>
+			<div>
 			<label for="conf">Confirm Password: </label>
-			<input type="password" id="conf" name="confirm"/>
+			<input type="password" id="conf" name="confirm" placeholder = "Confirm password"/>
+			<span id = "password_error"></span>;
+			</div>
+			<div>
 			<input type="submit" value="Register"/>
+			</div>
 		</form>
 	</body>
 </html>
