@@ -103,7 +103,6 @@ if(	   isset($_POST['email'])
 		</script>
 	</head>
 	<body onload="findFormsOnLoad();">
-		<!-- This is how you comment -->
 		<form name="regform" id="myForm" method="POST"
 					onsubmit="return doValidations(this)">
 			<div>
